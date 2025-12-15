@@ -1,31 +1,51 @@
 #include "Chip 8 Emulator.h"
 #include <iostream>
-
+#include <iomanip> // for std::hex formatting
 
 int main() {
-	Chip8 chip;
-	chip.reset();
+    Chip8 chip;
+    chip.reset();
 
-	chip.video[100] = 1;  // pretend pixel is “on”
-	chip.memory[0x200] = 0x00;
-	chip.memory[0x201] = 0xE0;  // CLS opcode
+    // --- 1?? Load a simple sprite into memory at I ---
+    // This represents a 3-row sprite:
+    // ####
+    // #  #
+    // ####
+    chip.index = 0x300;
+    chip.memory[0x300] = 0xF0; // 11110000
+    chip.memory[0x301] = 0x90; // 10010000
+    chip.memory[0x302] = 0xF0; // 11110000
 
-	chip.cycle();
-	
-	bool cleared = true;
-	for (int i = 0; i < Chip8::W * Chip8::H; i++) {
-		if (chip.video[i] != 0) { cleared = false; break; }
-	}
-	std::cout << "CLS worked? " << (cleared ? "yes" : "no") << std::endl;
-	/*chip.LoadROM("../../../roms/Airplane.ch8");
-	for (int i = 0; i < 5; i++) {
-		chip.cycle();
-	}
+    // --- 2?? Set registers for coordinates ---
+    chip.registers[0] = 5;  // V0 = x position
+    chip.registers[1] = 5;  // V1 = y position
 
-	// Print registers to confirm LD Vx,kk worked
-	std::cout << "VA = " << std::hex << (int)chip.registers[0xA] << std::endl;
-	std::cout << "VB = " << std::hex << (int)chip.registers[0xB] << std::endl;
-	std::cout << "VC = " << std::hex << (int)chip.registers[0xC] << std::endl;
-	std::cout << "VD = " << std::hex << (int)chip.registers[0xD] << std::endl;
-	std::cout << "VE = " << std::hex << (int)chip.registers[0xE] << std::endl;*/
+    // --- 3?? Execute draw instruction: D015 (draw 3-byte sprite at (V0,V1)) ---
+    chip.execute(0xD013);
+
+    // --- 4?? Print a section of the screen buffer to check drawing ---
+    std::cout << "After first draw:\n";
+    for (int y = 0; y < 10; ++y) {
+        for (int x = 0; x < 10; ++x) {
+            std::cout << (chip.video[y * Chip8::W + x] ? "#" : ".");
+        }
+        std::cout << "\n";
+    }
+
+    // --- 5?? Execute the same draw again (XOR toggles pixels back off) ---
+    chip.execute(0xD013);
+
+    // --- 6?? Print again to see it erased + check collision flag ---
+    std::cout << "\nAfter second draw (erases itself):\n";
+    for (int y = 0; y < 10; ++y) {
+        for (int x = 0; x < 10; ++x) {
+            std::cout << (chip.video[y * Chip8::W + x] ? "#" : ".");
+        }
+        std::cout << "\n";
+    }
+
+    // --- 7?? Check collision flag (VF) ---
+    std::cout << "\nCollision flag (VF): " << (int)chip.registers[0xF] << std::endl;
+
+    return 0;
 }
