@@ -22,20 +22,29 @@ Example using g++ on Windows/Linux:
 g++ *.cpp -o chip8 -lSDL2
 ⚠️ Compilation flags may vary depending on your SDL2 installation.
 
+```
+
 3. Load a ROM
 Update the ROM path inside main.cpp:
 
+```bash
 cpp
 Copy code
 std::string romPath = "path/to/your/rom.ch8";
 chip.LoadROM(romPath.c_str());
+
+```
 4. Run the Emulator
+
+```bash 
 bash
 Copy code
 ./chip8
 The emulator will automatically detect which CHIP-8 keys are used and display a control menu.
 
-5. Controls
+```
+
+6. Controls
 CHIP-8 → Keyboard Mapping
 
 CHIP-8 Key	PC Key
@@ -50,12 +59,15 @@ ENTER → Start execution
 
 ESC → Quit emulator
 
+```bash
 6. Project Structure
 pgsql
 Copy code
 Chip 8 Emulator.cpp / .h   → Core CPU (memory, registers, opcodes, timers)
 sdl_frontend.cpp / .h      → SDL2-based rendering & input handling
 main.cpp                   → Emulator loop, timing, ROM loading, key detection
+
+```
 7. Technical Highlights
 Implements all major CHIP-8 opcodes (0x0NNN – 0xFxxx)
 
@@ -80,3 +92,4 @@ Save/load emulator state
 
 vbnet
 Copy code
+
