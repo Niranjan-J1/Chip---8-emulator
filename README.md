@@ -24,27 +24,24 @@ g++ *.cpp -o chip8 -lSDL2
 
 ```
 
-3. Load a ROM
+### 3. Load a ROM
 Update the ROM path inside main.cpp:
 
 ```bash
-cpp
-Copy code
 std::string romPath = "path/to/your/rom.ch8";
 chip.LoadROM(romPath.c_str());
 
 ```
-4. Run the Emulator
+### 4. Run the Emulator
 
 ```bash 
-bash
-Copy code
+
 ./chip8
 The emulator will automatically detect which CHIP-8 keys are used and display a control menu.
 
 ```
 
-6. Controls
+### 6. Controls
 CHIP-8 → Keyboard Mapping
 
 CHIP-8 Key	PC Key
@@ -68,7 +65,7 @@ sdl_frontend.cpp / .h      → SDL2-based rendering & input handling
 main.cpp                   → Emulator loop, timing, ROM loading, key detection
 
 ```
-7. Technical Highlights
+### 7. Technical Highlights
 Implements all major CHIP-8 opcodes (0x0NNN – 0xFxxx)
 
 Accurate sprite rendering using XOR pixel toggling
@@ -79,7 +76,7 @@ Instruction timing decoupled from frame rate
 
 Clean separation between CPU logic and frontend rendering
 
-8. Future Improvements
+### 8. Future Improvements
 Sound output using SDL audio
 
 Configurable key bindings
@@ -92,4 +89,5 @@ Save/load emulator state
 
 vbnet
 Copy code
+
 
