@@ -58,8 +58,6 @@ ESC → Quit emulator
 
 ```bash
 6. Project Structure
-pgsql
-Copy code
 Chip 8 Emulator.cpp / .h   → Core CPU (memory, registers, opcodes, timers)
 sdl_frontend.cpp / .h      → SDL2-based rendering & input handling
 main.cpp                   → Emulator loop, timing, ROM loading, key detection
@@ -89,5 +87,6 @@ Save/load emulator state
 
 vbnet
 Copy code
+
 
 
